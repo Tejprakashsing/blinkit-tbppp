@@ -10,14 +10,11 @@ function App() {
     <>
     <Header />
     <main className='min-h-[78vh]'>
-      <Home />
       <Outlet />
     </main>
     <Footer />
     <Toaster/>
-    </>
-  
-    
+    </> 
   )
 }
 
