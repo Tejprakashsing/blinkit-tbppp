@@ -1,16 +1,23 @@
 import React from 'react'
-import Home from './components/Navbar'
-import Login from './components/Login'
-import { Route } from 'react-router-dom'
-import { Routes } from 'react-router-dom'
-import axios from 'axios'
+import { Outlet } from 'react-router-dom'
+import Header from './components/Header.jsx'
+import Footer from './components/Footer.jsx'
+import Home from './pages/Home.jsx'
+import toast , {Toaster} from 'react-hot-toast';
+
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home/>} />
-    <Route path="/login" element={<Login />} />
-    <Route path="/signup" element={<Login />} />
-  </Routes>
+    <>
+    <Header />
+    <main className='min-h-[78vh]'>
+      <Home />
+      <Outlet />
+    </main>
+    <Footer />
+    <Toaster/>
+    </>
+  
+    
   )
 }
 
