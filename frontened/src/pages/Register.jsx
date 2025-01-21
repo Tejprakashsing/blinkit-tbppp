@@ -5,12 +5,12 @@ import toast from 'react-hot-toast';
 import Axios from '../utils/Axios.js';
 import SummaryApi from '../common/SummaryApi.js';
 import AxiosToastError from '../utils/AxiosToastError.js';
-import { Link,useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 const Register = () => {
     const [data, setData] = useState({
-        name: "",
+        username: "",
         email: "",
         password: "",
         confirmPassword: ""
@@ -32,10 +32,10 @@ const Register = () => {
 
     const valideValue = Object.values(data).every(el => el)
 
-    const handleSubmit = async(e)=>{
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
-        if(data.password !== data.confirmPassword){
+        if (data.password !== data.confirmPassword) {
             toast.error(
                 "password and confirm password must be same"
             )
@@ -45,20 +45,21 @@ const Register = () => {
         try {
             const response = await Axios({
                 ...SummaryApi.register,
-                data : data
+                data: data
             })
-            
-            if(response.data.error){
+            console.log(response)
+
+            if (response.data.error) {
                 toast.error(response.data.message)
             }
 
-            if(response.data.success){
+            if (response.data.success) {
                 toast.success(response.data.message)
                 setData({
-                    name : "",
-                    email : "",
-                    password : "",
-                    confirmPassword : ""
+                    username: "",
+                    email: "",
+                    password: "",
+                    confirmPassword: ""
                 })
                 navigate("/login")
             }
@@ -66,28 +67,25 @@ const Register = () => {
         } catch (error) {
             AxiosToastError(error)
         }
-
-
-
     }
 
-  return (
-    <section className='w-full container mx-auto px-2'>
+    return (
+        <section className='w-full container mx-auto px-2'>
             <div className='bg-white my-4 w-full max-w-lg mx-auto rounded p-7'>
                 <p>Welcome to Binkeyit</p>
 
                 <form className='grid gap-4 mt-6' onSubmit={handleSubmit}>
                     <div className='grid gap-1'>
-                        <label htmlFor='name'>Name :</label>
+                        <label htmlFor='username'>Username :</label>
                         <input
                             type='text'
-                            id='name'
+                            id='username'
                             autoFocus
                             className='bg-blue-50 p-2 border rounded outline-none focus:border-primary-200'
-                            name='name'
-                            value={data.name}
+                            name='username'
+                            value={data.username}
                             onChange={handleChange}
-                            placeholder='Enter your name'
+                            placeholder='Enter your username'
                         />
                     </div>
                     <div className='grid gap-1'>
@@ -149,16 +147,15 @@ const Register = () => {
                         </div>
                     </div>
 
-                    <button disabled={!valideValue} className={` ${valideValue ? "bg-green-800 hover:bg-green-700" : "bg-gray-500" }    text-white py-2 rounded font-semibold my-3 tracking-wide`}>Register</button>
-
+                    <button disabled={!valideValue} className={` ${valideValue ? "bg-green-800 hover:bg-green-700" : "bg-gray-500"} text-white py-2 rounded font-semibold my-3 tracking-wide`}>Register</button>
                 </form>
 
                 <p>
-                    Already have account ? <Link to={"/login"} className='font-semibold text-green-700 hover:text-green-800'>Login</Link>
+                    Already have account? <Link to={"/login"} className='font-semibold text-green-700 hover:text-green-800'>Login</Link>
                 </p>
             </div>
         </section>
-  )
+    )
 }
 
 export default Register

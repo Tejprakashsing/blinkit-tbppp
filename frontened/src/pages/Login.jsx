@@ -37,6 +37,7 @@ const Login = () => {
                 ...SummaryApi.login,
                 data : data
             })
+            console.log(response)
             
             if(response.data.error){
                 toast.error(response.data.message)

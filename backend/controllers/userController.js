@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import 'dotenv/config';
 
 export async function registerUser(req,res){
+    console.log(req.body)
     const {username,email,password} = req.body;
     if(!username || !email || !password){
         return res.json({
@@ -14,7 +15,8 @@ export async function registerUser(req,res){
         const user = await UserModel.findOne({ username })
         if(user){
             return res.json({
-                message:"user alreaady exists"
+                message:"user alreaady exists",
+                success:true
             })
         }
         let hashedPassword = await bcrypt.hash(password, 10);
@@ -25,21 +27,23 @@ export async function registerUser(req,res){
         })
         await newUser.save()
         return res.status(201).json({
-            message:"user registered successfully"
+            message:"user registered successfully",
+            success:true
         })
     }
     catch(err){
         console.log(err)
         return res.status(500).json({
             message:"internal server error",
+            success:false
         })
     }
 }
 
 export async function loginUser(req,res){
-    const {username,email,password} = req.body;
+    const {email,password} = req.body;
     try{
-        const user = await UserModel.findOne({username});
+        const user = await UserModel.findOne({email});
         if(!user){
             return res.json({
                 message:"user does not exist"
