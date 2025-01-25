@@ -5,5 +5,6 @@ const userRouter=new Router();
 
 userRouter.post('/register',registerUser);
 userRouter.post('/login',loginUser);
+userRouter.put('/forgot-password',forgotpasswordUser);
 
 export default userRouter

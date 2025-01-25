@@ -5,6 +5,7 @@ import Search from './Search.jsx'
 import {FaRegCircleUser} from 'react-icons/fa6';
 import useMobile from '../hooks/useMobile.jsx';
 import {BsCart4} from "react-icons/bs";
+import { useSelector } from 'react-redux';
 
 
 const Header = () => {
@@ -12,6 +13,9 @@ const Header = () => {
     const location = useLocation();
     const isSearchPage = location.pathname === "/search"
     const navigate = useNavigate()
+    const user = useSelector((state)=> state?.user)
+
+    console.log('user from store',user)
 
     const redirectToLoginPage =() =>{
         navigate('/login')
