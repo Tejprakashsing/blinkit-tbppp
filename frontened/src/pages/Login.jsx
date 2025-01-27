@@ -43,16 +43,18 @@ const Login = () => {
                 toast.error(response.data.message)
             }
 
-            if(response.data.success){
-                toast.success(response.data.message)
-                localStorage.setItem('accessToken',response.data.data.accesstoken)
-                localStorage.setItem('refreshToken',response.data.data.refreshtoken)
-                setData({
-                    email : "",
-                    password : "",
-                })
-                navigate("/")
-            }
+            // if(response.data.success){
+            //     toast.success(response.data.message)
+            //     setData({
+            //         email : "",
+            //         password : "",
+            //     })
+            //     navigate("/")
+            // }
+
+            if (response.status === 200) {
+                navigate("/"); // Redirect to the home page
+              }
 
         } catch (error) {
             AxiosToastError(error)
@@ -101,10 +103,8 @@ const Login = () => {
                                 }
                             </div>
                         </div>
-                        <Link to={"/forgot-password"} className='block ml-auto hover:text-primary-200'>Forgot password ?</Link>
                     </div>
                     
-
                     <button disabled={!valideValue} className={` ${valideValue ? "bg-green-800 hover:bg-green-700" : "bg-gray-500" }    text-white py-2 rounded font-semibold my-3 tracking-wide`}>Login</button>
 
                 </form>
