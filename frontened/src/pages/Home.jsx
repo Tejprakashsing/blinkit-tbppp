@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 // import logo from "../assets/blinkit-logo.png";
-// import banner from "../assets/banner.jpg";
+import banner from "../assets/banner.jpg";
 // import cart from "../assets/cart.png";
 // import wideAssortment from "../assets/Wide_Assortment.png";
 
@@ -24,7 +24,7 @@ const Home = () => {
 
       {/* Banner Section */}
       <main className="main-content">
-        {/* <img src={banner} alt="Banner" className="banner" /> */}
+        <img src={banner} alt="Banner" className="banner" />
       </main>
 
       {/* Products Section */}

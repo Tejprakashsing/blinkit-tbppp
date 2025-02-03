@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-// import logo from "../assets/blinkit-logo.png";
+import logo from "../assets/logo.png";
 // import cart from "../assets/cart.png";
-// import wideAssortment from "../assets/Wide_Assortment.png";
+import wideAssortment from "../assets/Wide_Assortment.png";
 
 const AddProduct = () => {
   const [productData, setProductData] = useState({
@@ -72,21 +72,21 @@ const AddProduct = () => {
   return (
     <div className="add-product-page">
       <header className="header">
-        {/* <img src={logo} alt="Logo" className="logo" /> */}
+        <img src={logo} alt="Logo" className="logo" />
         <div className="search-bar">
           <input type="text" placeholder="Search 'groceries'" />
         </div>
         <div className="header-actions">
           <button className="cart-button">
-            {/* <img src={cart} alt="Cart" /> */}
+            <img src={cart} alt="Cart" />
             My Cart
           </button>
           <Link to="/add" className="add-product-icon">
-            {/* <img
+            <img
               src={wideAssortment}
               alt="Wide Assortment"
               className="wide-assortment"
-            /> */}
+            />
           </Link>
         </div>
       </header>
