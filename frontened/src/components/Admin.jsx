@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./Admin.css";
 const Admin = () => {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");

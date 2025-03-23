@@ -1,25 +1,48 @@
-import express, { urlencoded } from 'express'
-import userRouter from './router/userRouter.js'
-import connectDB from './config/mongoDB.js'
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
-import cors from "cors";
-import productRouter from './router/productRouter.js';
-const app=express();
+import morgan from 'morgan';
+import helmet from 'helmet';
+import connectDB from './config/connectDB.js';
+import authRoutes from './routes/authroutes.js';
+import productRoutes from './routes/productroutes.js';
+import categoryRoutes from './routes/categoryroutes.js';
+import subCategoryRoutes from './routes/subCategoryroutes.js';
+import paymentRoutes from './routes/paymentroutes.js'; // Import payment routes
 
-app.use(express.json()); 
-app.use(express.urlencoded({ extended: true }));  
 
-app.use(cookieParser());
-app.use(cors({
-    origin: "http://localhost:5173",
+dotenv.config();
+
+const app = express();
+
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "http://localhost:5174"],
     credentials: true,
-}))
+  })
+);
+app.use(express.json());
+app.use(cookieParser());
+app.use(morgan('dev'));
+app.use(
+  helmet({
+    crossOriginResourcePolicy: false,
+  })
+);
 
-app.use('/api/user',userRouter)
-app.use('/api/products', productRouter)
+// Routes
+app.use('/api/products', productRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/categories', categoryRoutes);
+app.use('/api/subcategories', subCategoryRoutes);
+app.use('/api/payment', paymentRoutes); // Add payment routes here
 
-connectDB().then(()=>{
-    app.listen(8080,()=>{
-        console.log("server is running");
-    })
-})
+
+const PORT = process.env.PORT || 8080;
+
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+});

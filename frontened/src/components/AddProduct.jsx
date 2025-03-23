@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
+import "./AddProduct.css";
 import { Link } from "react-router-dom";
-import logo from "../assets/logo.png";
-// import cart from "../assets/cart.png";
+import logo from "../assets/blinkit-logo.png";
+import cart from "../assets/cart.png";
 import wideAssortment from "../assets/Wide_Assortment.png";
 
 const AddProduct = () => {
   const [productData, setProductData] = useState({
     name: "",
     description: "",
+    price: "",  // Initialize price as an empty string
     image: null,
   });
   const [previewImage, setPreviewImage] = useState(null);
+  const [showAlert, setShowAlert] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [username, setUsername] = useState("Guest");
 
@@ -31,32 +34,36 @@ const AddProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!productData.name || !productData.description || !productData.image) {
+  
+    if (!productData.name || !productData.description || !productData.image || !productData.price) {
       alert("Please fill in all fields and upload an image!");
       return;
     }
-
+  
     const formData = new FormData();
     formData.append("name", productData.name);
     formData.append("description", productData.description);
+    formData.append("price", productData.price); // Ensure price is appended
     formData.append("image", productData.image);
-
+  
     setIsLoading(true);
-
+  
     try {
-    //   const response = await fetch("http://localhost:8080/api/products/add", {
-    //     method: "POST",
-    //     body: formData,
-    //   });
-    const response = await Axios({
-        ...SummaryApi.addProduct,
-        data : data
-    })
-
+      const response = await fetch("http://localhost:8080/api/products/add", {
+        method: "POST",
+        body: formData,
+      });
+  
       if (response.ok) {
         const data = await response.json();
-        alert("Product added successfully!");
+        
+        // Show the blob with success message
+        setShowAlert(true);
+  
+        // Optionally hide the alert after 3 seconds
+        setTimeout(() => {
+          setShowAlert(false);
+        }, 3000);
       } else {
         const errorText = await response.text();
         alert(errorText || "Failed to add product");
@@ -68,6 +75,7 @@ const AddProduct = () => {
       setIsLoading(false);
     }
   };
+  
 
   return (
     <div className="add-product-page">
@@ -81,13 +89,6 @@ const AddProduct = () => {
             <img src={cart} alt="Cart" />
             My Cart
           </button>
-          <Link to="/add" className="add-product-icon">
-            <img
-              src={wideAssortment}
-              alt="Wide Assortment"
-              className="wide-assortment"
-            />
-          </Link>
         </div>
       </header>
 
@@ -99,6 +100,7 @@ const AddProduct = () => {
           <nav>
             <ul>
               <li><Link to="/">Home</Link></li>
+              <li><Link to="/add-category">Add Category</Link></li>
               <li><Link to="/add">Add Product</Link></li>
               <li><Link to="/login">Profile</Link></li>
               <li><Link to="/login">Logout</Link></li>
@@ -120,13 +122,23 @@ const AddProduct = () => {
               />
             </div>
             <div className="form-group">
-              <label>Description</label>
+              <label>Weight</label>
               <input
                 type="text"
                 name="description"
                 value={productData.description}
                 onChange={handleChange}
-                placeholder="Enter product description"
+                placeholder="Enter product weight"
+              />
+            </div>
+            <div className="form-group">
+              <label>Price</label>
+              <input
+                type="number"
+                name="price"
+                value={productData.price}
+                onChange={handleChange}
+                placeholder="Enter product price"
               />
             </div>
             <div className="form-group">
@@ -150,8 +162,15 @@ const AddProduct = () => {
           </form>
         </main>
       </div>
+      {showAlert && (
+      <div className="blob-message">
+        <p>Product added successfully!</p>
+      </div>
+    )}
     </div>
+    
   );
+  
 };
 
 export default AddProduct;
