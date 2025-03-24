@@ -46,7 +46,7 @@ const Home = () => {
     }
 
     // Check if user is admin
-    const storedIsAdmin = localStorage.getItem("isAdmin");
+    const storedIsAdmin = localStorage.getItem("isAdmin"); 
     if (storedIsAdmin) {
       setIsAdmin(JSON.parse(storedIsAdmin));
     }

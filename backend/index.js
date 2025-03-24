@@ -4,12 +4,12 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import helmet from 'helmet';
-import connectDB from './config/connectDB.js';
+import connectDB from './config/mongoDB.js';
 import authRoutes from './routes/authroutes.js';
 import productRoutes from './routes/productroutes.js';
 import categoryRoutes from './routes/categoryroutes.js';
 import subCategoryRoutes from './routes/subCategoryroutes.js';
-import paymentRoutes from './routes/paymentroutes.js'; // Import payment routes
+// import paymentRoutes from './routes/paymentroutes.js'; // Import payment routes
 
 
 dotenv.config();
@@ -36,7 +36,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/subcategories', subCategoryRoutes);
-app.use('/api/payment', paymentRoutes); // Add payment routes here
+// app.use('/api/payment', paymentRoutes); // Add payment routes here
 
 
 const PORT = process.env.PORT || 8080;

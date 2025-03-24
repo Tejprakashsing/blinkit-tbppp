@@ -34,7 +34,7 @@ const Login = () => {
       if (response.status === 200) {
         if (response.data.user) {
           const { isAdmin, email } = response.data.user;
-      
+          
           // Store the isAdmin flag and email in localStorage
           localStorage.setItem("isAdmin", isAdmin);
           localStorage.setItem("email", email);
